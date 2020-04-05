@@ -1,7 +1,13 @@
 from librarydb import LibraryDB
 
 if __name__ == "__main__":
-    myDB = LibraryDB()
+    params = {'host':'', 'user':'', 'passwd':'', 'db':''}
+    with open("host.txt") as f:
+        lines = f.readlines()
+        for line in lines:
+            tmp = line.split('=')
+            params[tmp[0]] = tmp[1].strip('\n')
+    myDB = LibraryDB(params)
     while True:
         command = input('-----------------------------------------------------\n'
                         'Welcome to the library.\n'

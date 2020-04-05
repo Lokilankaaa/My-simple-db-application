@@ -5,8 +5,8 @@ from record import Record
 
 
 class LibraryDB():
-    def __init__(self):
-        self.db = pymysql.connect('lokilanka.cn', user="test2", passwd="password", db="lab5")
+    def __init__(self, params):
+        self.db = pymysql.connect(params['host'], user=params['user'], passwd=params['passwd'], db=params['db'])
         self.cursor = self.db.cursor()
         self.books = Books(self.cursor, self.db)
         self.cards = Cards(self.cursor, self.db)
