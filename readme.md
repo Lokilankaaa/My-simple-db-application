@@ -13,4 +13,8 @@ python db_app.py
 ## Todo
 - [x] Basic functions like insert, query
 - [ ] Handle some exceptions
+<<<<<<< Updated upstream
 - [ ] Maybe gui will be added or maybe not
+=======
+- [ ] Maybe gui will be added or maybe not
+>>>>>>> Stashed changes
