@@ -1,4 +1,0 @@
-host=lokilanka.cn
-user=test2
-passwd=password
-db=lab5
