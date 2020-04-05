@@ -51,6 +51,9 @@ class Books:
             except:
                 self.db.rollback()
                 print("Fail to modify for unknown reason!")
+        print("------------------------------------------------------------------------------------------------")
+        print("                                                                                                ")
+        print("                                                                                                ")
 
     def query(self, info):
         query_sql = "select * from book "
@@ -78,3 +81,32 @@ class Books:
         except:
             print("Query failed for unknown reason!")
             return None
+
+    def borrow(self, bid):
+        query_sql = "select * from book where bno='{0}'".format(bid)
+        update_sql = "update book set stock = stock - 1 where bno='{0}'".format(bid)
+        self.cursor.execute(query_sql)
+        res = self.cursor.fetchone()
+        stock = res[8]
+        if stock >= 1:
+            try:
+                self.cursor.execute(update_sql)
+                self.db.commit()
+                return True
+            except:
+                self.db.rollback()
+                print("Fail to borrow.")
+                return False
+        else:
+            print("The book you want is checked out.")
+            return False
+
+    def returnBook(self, bid):
+        update_sql = "update book set stock = stock + 1 where bno='{0}'".format(bid)
+        try:
+            self.cursor.execute(update_sql)
+            self.db.commit()
+            return True
+        except:
+            self.db.rollback()
+            return False

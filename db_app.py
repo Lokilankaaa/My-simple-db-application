@@ -3,7 +3,8 @@ from librarydb import LibraryDB
 if __name__ == "__main__":
     myDB = LibraryDB()
     while True:
-        command = input('Welcome to the library.\n'
+        command = input('-----------------------------------------------------\n'
+                        'Welcome to the library.\n'
                         '-----------------------------------------------------\n'
                         'You can store one book typing 1.\n'
                         'You can store batch of books typing 2.\n'
@@ -19,13 +20,16 @@ if __name__ == "__main__":
         elif command == '3':
             myDB.queryBooks()
         elif command == '4':
-            pass
+            myDB.borrowBook()
         elif command == '5':
-            pass
+            myDB.showBorrowed()
         elif command == '6':
-            pass
+            myDB.returnBook()
         elif command == 'q':
             print("Bye!")
             break
         else:
             print("Unknown command! Please try again.")
+            print("------------------------------------------------------------------------------------------------")
+            print("                                                                                                ")
+            print("                                                                                                ")

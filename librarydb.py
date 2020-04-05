@@ -1,6 +1,7 @@
 import pymysql
 from books import Books
 from cards import Cards
+from record import Record
 
 
 class LibraryDB():
@@ -9,6 +10,7 @@ class LibraryDB():
         self.cursor = self.db.cursor()
         self.books = Books(self.cursor, self.db)
         self.cards = Cards(self.cursor, self.db)
+        self.records = Record(self.cursor, self.db)
 
     def __enter__(self):
         return self.cursor
@@ -47,6 +49,7 @@ class LibraryDB():
                       + 'xxx to xxx(where xxx is the number of ' + t + ' )')
             queryInfo[t] = input()
         results = self.books.query(queryInfo)
+        print("------------------------------------------------------------------------------------------------")
         if results:
             for one in results:
                 print(
@@ -58,5 +61,56 @@ class LibraryDB():
         print("                                                                                                ")
         print("                                                                                                ")
 
-    def createCard(self):
-        pass
+    def borrowBook(self):
+        card_id = input("Please enter your 7 digits borrowing card id(if you don't have one, type register): ")
+        if card_id == 'register':
+            name = input("Please enter your name(no more than 10 letters): ")
+            department = input("Please enter your department name(no more than 40 letters): ")
+            type = input("Please enter your card type(T or S): ")
+            card_id = self.cards.createCard(name, department, type)
+        if card_id:
+            bid = input("Please enter the book id which you want to borrow: ")
+            if self.records.checkBorrow(card_id, bid):
+                print("You have borrowed the book!")
+                return
+            res = self.books.borrow(bid)
+            if res:
+                tmp = self.records.addBorrowRecord(card_id, bid)
+                if tmp:
+                    print("Here you are")
+                else:
+                    print("Sorry!")
+            else:
+                print("Sorry!")
+            print("------------------------------------------------------------------------------------------------")
+            print("                                                                                                ")
+            print("                                                                                                ")
+        else:
+            return
+
+    def returnBook(self):
+        cid = input("Please enter your 7 digits card id: ")
+        bid = input("Please enter the id of your book you want return: ")
+        ret_res = self.records.returnRecord(cid, bid)
+        if ret_res:
+            if self.books.returnBook(bid):
+                print("Successfully returned!")
+        else:
+            print("You didn't borrow the book.")
+        print("------------------------------------------------------------------------------------------------")
+        print("                                                                                                ")
+        print("                                                                                                ")
+
+    def showBorrowed(self):
+        cid = input("Please enter your card id: ")
+        res = self.records.showBorrowed(cid)
+        if res:
+            print("------------------------------------------------------------------------------------------------")
+            for one in res:
+                print("Card_id:{0} Book_id:{1} borrow_date:{2} Return_date:{3}".format(one[0], one[1], one[2], one[3]))
+        else:
+            print("You didn't borrow any books")
+
+        print("------------------------------------------------------------------------------------------------")
+        print("                                                                                                ")
+        print("                                                                                                ")
