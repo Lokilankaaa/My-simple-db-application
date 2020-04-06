@@ -19,6 +19,6 @@ python db_app.py
 ## Todo
 - [x] Basic functions like insert, query
 - [ ] Maybe gui will be added or maybe not
-- [ ] Handle some exceptions
+- [x] Handle some exceptions
 
 
