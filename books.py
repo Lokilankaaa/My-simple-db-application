@@ -6,15 +6,17 @@ class Books:
     def __update__(self, choice, bookInfo):
         sql = "update book\
                set "
-        if choice == 1:
+        if choice == '1':
             for key, value in bookInfo.items():
+                if key == 'num':
+                    continue
                 if key == 'book_id':
-                    sql += "{0}='{1}'".format(key, value)
+                    sql += "bno='{1}'".format(key, value)
                 else:
                     sql += ",{0}='{1}'".format(key, value)
         else:
             sql += "total=total+'{0}', stock=stock+'{1}'".format(bookInfo['num'], bookInfo['num'])
-        sql += "where bno={0}".format(bookInfo['book_id'])
+        sql += "where bno='{0}'".format(bookInfo['book_id'])
         return sql
 
     def store(self, bookInfo):
@@ -55,6 +57,7 @@ class Books:
         print("                                                                                                ")
         print("                                                                                                ")
 
+
     def query(self, info):
         query_sql = "select * from book "
         i=0
@@ -65,10 +68,10 @@ class Books:
                     i += 1
                 elif i:
                     query_sql += 'and'
-                if key == 'year' or key == 'value':
+                if key == 'year' or key == 'price':
                     tmp = value.split(' ')
                     tmp.remove('to')
-                    query_sql += " {0}='{1}' ".format(key, tmp[0]) if tmp[0] == tmp[1] else " '{0}'<={1}<='{2}' ".format(tmp[0],
+                    query_sql += " {0}='{1}' ".format(key, tmp[0]) if tmp[0] == tmp[1] else " {0}<={1} and {1}<={2} ".format(tmp[0],
                                                                                                                  key,
                                                                                                                  tmp[1])
                 else:

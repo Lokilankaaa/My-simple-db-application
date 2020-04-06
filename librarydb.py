@@ -34,8 +34,8 @@ class LibraryDB():
             path = input('Please enter file path：')
             with open(path) as f:
                 for line in f.readlines():
-                    oneLine = line.split(',')
-                    bookInfo = zip(tt, oneLine)
+                    oneLine = [i.strip(' ') for i in line.strip('\n').split(',')]
+                    bookInfo = dict(zip(tt, oneLine))
                     self.books.store(bookInfo)
 
     def queryBooks(self):
