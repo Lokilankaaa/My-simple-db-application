@@ -21,11 +21,14 @@ class Record:
 
     def checkBorrow(self, cid, bid):
         query_sql = "select * from borrow where cno='{0}' and bno='{1}' and return_date is null".format(cid, bid)
-        self.cursor.execute(query_sql)
-        res = self.cursor.fetchall()
-        if res:
-            return True
-        else:
+        try:
+            self.cursor.execute(query_sql)
+            res = self.cursor.fetchall()
+            if res:
+                return True
+            else:
+                return False
+        except:
             return False
 
     def returnRecord(self, cid, bid):

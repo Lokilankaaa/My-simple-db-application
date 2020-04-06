@@ -64,10 +64,7 @@ class LibraryDB():
     def borrowBook(self):
         card_id = input("Please enter your 7 digits borrowing card id(if you don't have one, type register): ")
         if card_id == 'register':
-            name = input("Please enter your name(no more than 10 letters): ")
-            department = input("Please enter your department name(no more than 40 letters): ")
-            type = input("Please enter your card type(T or S): ")
-            card_id = self.cards.createCard(name, department, type)
+            card_id = self.cards.cardManage('1')
         if card_id:
             bid = input("Please enter the book id which you want to borrow: ")
             if self.records.checkBorrow(card_id, bid):
@@ -111,6 +108,19 @@ class LibraryDB():
         else:
             print("You didn't borrow any books")
 
+        print("------------------------------------------------------------------------------------------------")
+        print("                                                                                                ")
+        print("                                                                                                ")
+
+    def cardManage(self):
+        choice = input("You can register typing 1.\n"
+                       "You can remove a card typing 2\n"
+                       "You can modify a card typing 3\n")
+        res = self.cards.cardManage(choice)
+        if res:
+            print("Successfully done!")
+        else:
+            print("Failed for unknown reason!")
         print("------------------------------------------------------------------------------------------------")
         print("                                                                                                ")
         print("                                                                                                ")

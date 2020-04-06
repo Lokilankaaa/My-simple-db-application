@@ -2,7 +2,7 @@ from librarydb import LibraryDB
 
 if __name__ == "__main__":
     params = {'host':'', 'user':'', 'passwd':'', 'db':''}
-    with open("host.txt") as f:
+    with open("myhost.txt") as f:
         lines = f.readlines()
         for line in lines:
             tmp = line.split('=')
@@ -18,6 +18,7 @@ if __name__ == "__main__":
                         'You can borrow a book typing 4.\n'
                         'You can get details about what you borrowed typing 5.\n'
                         'You can return a book typing 6.\n'
+                        'You can manage cards typing 7.\n'
                         'You can quit typing q.\n')
         if command == '1':
             myDB.storeBooks()
@@ -31,6 +32,8 @@ if __name__ == "__main__":
             myDB.showBorrowed()
         elif command == '6':
             myDB.returnBook()
+        elif command == '7':
+            myDB.cardManage()
         elif command == 'q':
             print("Bye!")
             break
